@@ -8,6 +8,8 @@ entries:
     source: file://webhook.lua
     method: handler
     modules: [http, json, registry, funcs, env, logger]
+    imports:
+      types: telegram.sdk:types
 
   - name: webhook.endpoint
     kind: http.endpoint

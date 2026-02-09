@@ -40,7 +40,7 @@ local function detect_update_type(update)
 end
 
 --- Find and call a command handler from registry.
-local function dispatch_command(cmd, update)
+local function dispatch_command(cmd: string, update)
     local entries, err = registry.find({kind = "registry.entry"})
     if err then
         logger:error("Failed to query registry", {error = tostring(err)})
@@ -52,7 +52,7 @@ local function dispatch_command(cmd, update)
             and entry.meta.type == "telegram.command"
             and entry.meta.command == cmd
         then
-            local handler_id = tostring(entry.meta.handler)
+            local handler_id: string = tostring(entry.meta.handler)
             local _, call_err = funcs.call(handler_id, update)
             if call_err then
                 logger:error("Command handler failed", {
@@ -69,7 +69,7 @@ local function dispatch_command(cmd, update)
 end
 
 --- Find and call a generic update type handler from registry.
-local function dispatch_update(update_type, update)
+local function dispatch_update(update_type: string, update)
     local entries, err = registry.find({kind = "registry.entry"})
     if err then
         logger:error("Failed to query registry for handlers", {error = tostring(err)})
@@ -81,7 +81,7 @@ local function dispatch_update(update_type, update)
             and entry.meta.type == "telegram.handler"
             and entry.meta.update_type == update_type
         then
-            local handler_id = tostring(entry.meta.handler)
+            local handler_id: string = tostring(entry.meta.handler)
             local _, call_err = funcs.call(handler_id, update)
             if call_err then
                 logger:error("Update handler failed", {
@@ -128,7 +128,7 @@ local function handler()
     -- 4. Detect and dispatch
     local update_type, value, _ = detect_update_type(update)
 
-    if update_type == "command" then
+    if update_type == "command" and value then
         dispatch_command(value, update)
     else
         dispatch_update(update_type, update)

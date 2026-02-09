@@ -6,7 +6,7 @@ local logger = require("logger")
 local BASE_URL = "https://api.telegram.org/bot"
 
 --- Call a Telegram Bot API method.
-local function api_call(method, payload)
+local function api_call(method: string, payload: any?)
     local token = env.get("TELEGRAM_BOT_TOKEN")
     if not token then
         return nil, errors.new({kind = errors.INVALID, message = "TELEGRAM_BOT_TOKEN not configured"})
@@ -41,11 +41,11 @@ end
 
 -- ── Exported methods ────────────────────────────────────
 
-local function send_message(params)
+local function send_message(params: SendMessageParams)
     return api_call("sendMessage", params)
 end
 
-local function set_webhook(params)
+local function set_webhook(params: SetWebhookParams)
     return api_call("setWebhook", params)
 end
 
