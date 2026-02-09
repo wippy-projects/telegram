@@ -7,7 +7,13 @@ entries:
     kind: function.lua
     source: file://webhook.lua
     method: handler
-    modules: [http, json, registry, funcs, env, logger]
+    modules:
+      - http
+      - json
+      - registry
+      - funcs
+      - env
+      - logger
     imports:
       types: telegram.sdk:types
 
@@ -24,7 +30,10 @@ entries:
     kind: process.lua
     source: file://register_webhook.lua
     method: main
-    modules: [io, funcs, env]
+    modules:
+      - io
+      - funcs
+      - env
     meta:
       command:
         name: register-webhook
@@ -35,7 +44,9 @@ entries:
     kind: process.lua
     source: file://delete_webhook.lua
     method: main
-    modules: [io, funcs]
+    modules:
+      - io
+      - funcs
     meta:
       command:
         name: delete-webhook

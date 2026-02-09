@@ -15,7 +15,9 @@ entries:
     kind: function.lua
     source: file://start.lua
     method: handler
-    modules: [funcs, logger]
+    modules:
+      - logger
+      - funcs
 
   # ── /help ──────────────────────────────────────────────
   - name: help
@@ -30,4 +32,7 @@ entries:
     kind: function.lua
     source: file://help.lua
     method: handler
-    modules: [funcs, registry, logger]
+    modules:
+      - logger
+      - funcs
+      - registry

@@ -114,7 +114,7 @@ TELEGRAM_WEBHOOK_SECRET=your-random-secret-string
 ### Register the webhook
 
 ```bash
-wippy run -x telegram.handler:register_webhook
+wippy run register-webhook
 ```
 
 This verifies your bot token via `getMe`, then registers the webhook URL with Telegram.
@@ -122,7 +122,7 @@ This verifies your bot token via `getMe`, then registers the webhook URL with Te
 ### Remove the webhook
 
 ```bash
-wippy run -x telegram.handler:delete_webhook
+wippy run delete-webhook
 ```
 
 ### Start the server

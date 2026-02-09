@@ -41,17 +41,14 @@ end
 
 --- Find and call a command handler from registry.
 local function dispatch_command(cmd: string, update)
-    local entries, err = registry.find({kind = "registry.entry"})
+    local entries, err = registry.find({["meta.type"] = "telegram.command", ["meta.command"] = cmd})
     if err then
         logger:error("Failed to query registry", {error = tostring(err)})
         return
     end
 
     for _, entry in ipairs(entries) do
-        if entry.meta
-            and entry.meta.type == "telegram.command"
-            and entry.meta.command == cmd
-        then
+        if entry.meta then
             local handler_id: string = tostring(entry.meta.handler)
             local _, call_err = funcs.call(handler_id, update)
             if call_err then
@@ -70,17 +67,14 @@ end
 
 --- Find and call a generic update type handler from registry.
 local function dispatch_update(update_type: string, update)
-    local entries, err = registry.find({kind = "registry.entry"})
+    local entries, err = registry.find({["meta.type"] = "telegram.handler", ["meta.update_type"] = update_type})
     if err then
         logger:error("Failed to query registry for handlers", {error = tostring(err)})
         return
     end
 
     for _, entry in ipairs(entries) do
-        if entry.meta
-            and entry.meta.type == "telegram.handler"
-            and entry.meta.update_type == update_type
-        then
+        if entry.meta then
             local handler_id: string = tostring(entry.meta.handler)
             local _, call_err = funcs.call(handler_id, update)
             if call_err then

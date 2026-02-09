@@ -8,6 +8,7 @@ entries:
     meta:
       title: Telegram Bot
       description: Telegram webhook bot with registry-based command routing
+      readme: file://../README.md
 
   # ── Requirements (injected by consumer) ─────────────────
 
@@ -16,7 +17,7 @@ entries:
     meta:
       description: HTTP router for webhook endpoint
     targets:
-      - entry: telegram.handler:webhook.endpoint
+      - entry: telegram.handler:webhook_endpoint
         path: .meta.router
 
   - name: env_storage
@@ -30,13 +31,6 @@ entries:
         path: .storage
       - entry: telegram:webhook_secret
         path: .storage
-
-  - name: process_host
-    kind: ns.requirement
-    meta:
-      description: Process execution host for stateful handlers
-    default: app:processes
-    targets: []
 
   # ── Environment Variables ───────────────────────────────
 

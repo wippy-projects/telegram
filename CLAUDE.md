@@ -15,10 +15,10 @@ storage, process host) via `ns.dependency` parameters.
 wippy run
 
 # Register webhook with Telegram
-wippy run -x telegram.handler:register_webhook
+wippy run register-webhook
 
 # Remove webhook
-wippy run -x telegram.handler:delete_webhook
+wippy run delete-webhook
 
 # Lint a specific namespace
 wippy lint --ns=telegram
@@ -63,12 +63,6 @@ SDK (`src/sdk/client.lua`) wraps the Telegram Bot API with `http_client.post()`.
 | `process.lua`    | CLI commands (register/delete webhook)           |
 | `registry.entry` | Command registration (/start, /help)             |
 | `library.lua`    | Type definitions                                 |
-
-### Local development setup
-
-`wippy.lock` maps `butschster/telegram → ./src` so the dev app in `dev/` uses local source. The dev app (
-`dev/_index.yaml`) provides all infrastructure and wires it to the package via `ns.dependency` parameters. Bot
-credentials go in `dev/.env`.
 
 ## Lua conventions
 
