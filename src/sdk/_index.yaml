@@ -1,0 +1,33 @@
+version: "1.0"
+namespace: telegram.sdk
+
+entries:
+  # ── Type Definitions ────────────────────────────────────
+  - name: types
+    kind: library.lua
+    source: file://types.lua
+
+  # ── API Client Functions ────────────────────────────────
+  - name: send_message
+    kind: function.lua
+    source: file://client.lua
+    method: send_message
+    modules: [http_client, json, env, logger]
+
+  - name: set_webhook
+    kind: function.lua
+    source: file://client.lua
+    method: set_webhook
+    modules: [http_client, json, env, logger]
+
+  - name: delete_webhook
+    kind: function.lua
+    source: file://client.lua
+    method: delete_webhook
+    modules: [http_client, json, env, logger]
+
+  - name: get_me
+    kind: function.lua
+    source: file://client.lua
+    method: get_me
+    modules: [http_client, json, env, logger]

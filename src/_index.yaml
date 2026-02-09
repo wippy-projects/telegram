@@ -1,0 +1,53 @@
+version: "1.0"
+namespace: telegram
+
+entries:
+  # ── Package Definition ─────────────────────────────────
+  - name: definition
+    kind: ns.definition
+    meta:
+      title: Telegram Bot
+      description: Telegram webhook bot with registry-based command routing
+
+  # ── Requirements (injected by consumer) ─────────────────
+
+  - name: webhook_router
+    kind: ns.requirement
+    meta:
+      description: HTTP router for webhook endpoint
+    targets:
+      - entry: telegram.handler:webhook.endpoint
+        path: .meta.router
+
+  - name: env_storage
+    kind: ns.requirement
+    meta:
+      description: Environment variable storage for bot configuration
+    targets:
+      - entry: telegram:bot_token
+        path: .storage
+      - entry: telegram:webhook_url
+        path: .storage
+      - entry: telegram:webhook_secret
+        path: .storage
+
+  - name: process_host
+    kind: ns.requirement
+    meta:
+      description: Process execution host for stateful handlers
+    default: app:processes
+    targets: []
+
+  # ── Environment Variables ───────────────────────────────
+
+  - name: bot_token
+    kind: env.variable
+    variable: TELEGRAM_BOT_TOKEN
+
+  - name: webhook_url
+    kind: env.variable
+    variable: TELEGRAM_WEBHOOK_URL
+
+  - name: webhook_secret
+    kind: env.variable
+    variable: TELEGRAM_WEBHOOK_SECRET

@@ -1,0 +1,9 @@
+organization: butschster
+module: telegram
+description: Telegram bot webhook handler with registry-based command routing
+license: MIT
+keywords:
+  - telegram
+  - bot
+  - webhook
+  - commands

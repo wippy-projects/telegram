@@ -1,0 +1,33 @@
+version: "1.0"
+namespace: telegram.commands
+
+entries:
+  # ── /start ─────────────────────────────────────────────
+  - name: start
+    kind: registry.entry
+    meta:
+      type: telegram.command
+      command: /start
+      description: "Start interacting with the bot"
+      handler: telegram.commands:start_handler
+
+  - name: start_handler
+    kind: function.lua
+    source: file://start.lua
+    method: handler
+    modules: [funcs, logger]
+
+  # ── /help ──────────────────────────────────────────────
+  - name: help
+    kind: registry.entry
+    meta:
+      type: telegram.command
+      command: /help
+      description: "Show available commands"
+      handler: telegram.commands:help_handler
+
+  - name: help_handler
+    kind: function.lua
+    source: file://help.lua
+    method: handler
+    modules: [funcs, registry, logger]
