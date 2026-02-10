@@ -20,7 +20,7 @@ entries:
   - name: webhook.endpoint
     kind: http.endpoint
     meta:
-      router: ~
+      router: "telegram:router"
     method: POST
     path: /webhook
     func: webhook

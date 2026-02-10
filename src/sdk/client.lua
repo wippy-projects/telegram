@@ -57,9 +57,14 @@ local function get_me()
     return api_call("getMe", {})
 end
 
+local function send_chat_action(params)
+    return api_call("sendChatAction", params)
+end
+
 return {
     send_message = send_message,
     set_webhook = set_webhook,
     delete_webhook = delete_webhook,
-    get_me = get_me
+    get_me = get_me,
+    send_chat_action = send_chat_action,
 }

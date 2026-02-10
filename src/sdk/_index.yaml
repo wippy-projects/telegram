@@ -31,3 +31,9 @@ entries:
     source: file://client.lua
     method: get_me
     modules: [http_client, json, env, logger]
+
+  - name: send_chat_action
+    kind: function.lua
+    source: file://client.lua
+    method: send_chat_action
+    modules: [http_client, json, env, logger]

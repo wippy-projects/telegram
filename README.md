@@ -45,26 +45,52 @@ infrastructure. Your app provides the HTTP router, env storage, and process host
 
 ## Installation
 
-Add the dependency to your app's `_index.yaml`:
+### 1. Create `src/_telegram.yaml`
+
+The dependency and its router **must** live in a separate file with `namespace: telegram` (matching the package's own
+namespace). This is required because the webhook endpoint resolves its router reference at entry load time — before
+`ns.requirement` parameter injection takes place. By defining the router in the package's namespace, the reference
+`telegram:router` exists when the endpoint needs it.
 
 ```yaml
+# src/_telegram.yaml
 version: "1.0"
-namespace: app
+namespace: telegram
 
 entries:
-  # ── Telegram package dependency ────────────────────────
-  - name: __dependency.telegram
+  - name: dep.telegram
     kind: ns.dependency
     component: butschster/telegram
     version: "*"
     parameters:
-      - name: webhook_router
-        value: app:telegram_router
-      - name: env_storage
+      - name: telegram:webhook_router
+        value: telegram:router
+      - name: telegram:env_storage
         value: app:env_file
-      - name: process_host
-        value: app:processes
 
+  # Router must be defined here (in the telegram namespace) so that
+  # telegram.handler:webhook.endpoint can resolve its meta.router reference.
+  - name: router
+    kind: http.router
+    meta:
+      server: app:gateway
+    prefix: /telegram
+```
+
+> **Note:** Ideally you should be able to pass any router (e.g. `app:my_router`) as the `webhook_router` parameter and
+> define everything in your app's namespace. This is a known limitation — `ns.requirement` injection currently happens
+> after entry references are resolved. This workaround will be removed once the resolution order is fixed in Wippy.
+
+### 2. Ensure your app provides the required infrastructure
+
+Your app's `_index.yaml` should already have these (or similar) entries:
+
+```yaml
+# src/_index.yaml
+version: "1.0"
+namespace: app
+
+entries:
   # ── Infrastructure (you probably already have these) ───
 
   - name: env_file
@@ -75,8 +101,6 @@ entries:
 
   - name: processes
     kind: process.host
-    host:
-      workers: 8
     lifecycle:
       auto_start: true
 
@@ -85,12 +109,6 @@ entries:
     addr: ":8080"
     lifecycle:
       auto_start: true
-
-  - name: telegram_router
-    kind: http.router
-    meta:
-      server: gateway
-    prefix: /telegram
 ```
 
 ## Configuration
