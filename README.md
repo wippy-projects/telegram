@@ -1,6 +1,6 @@
-# butschster/telegram
+# Telegram Bot Webhook Handler
 
-A publishable Wippy Hub package that provides Telegram bot webhook handling with registry-based command routing.
+Provides Telegram bot webhook handling with registry-based command routing.
 
 Designed as a reusable module that plugs into any Wippy application via `ns.dependency` — the package doesn't own any
 infrastructure. Your app provides the HTTP router, env storage, and process host; the package handles everything else.
