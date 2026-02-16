@@ -127,11 +127,55 @@ type Update = {
 
 -- ── Parameter types ────────────────────────────────────
 
+-- ── Keyboard types ─────────────────────────────────────
+
+type InlineKeyboardButton = {
+    text: string,
+    callback_data?: string,
+    url?: string,
+    switch_inline_query?: string,
+    switch_inline_query_current_chat?: string,
+    web_app?: {url: string},
+}
+
+type KeyboardButton = {
+    text: string,
+    request_contact?: boolean,
+    request_location?: boolean,
+    request_poll?: {type?: string},
+}
+
+type InlineKeyboardMarkup = {
+    inline_keyboard: {{InlineKeyboardButton}},
+}
+
+type ReplyKeyboardMarkup = {
+    keyboard: {{KeyboardButton}},
+    resize_keyboard?: boolean,
+    one_time_keyboard?: boolean,
+    is_persistent?: boolean,
+    selective?: boolean,
+    input_field_placeholder?: string,
+}
+
+type ReplyKeyboardRemove = {
+    remove_keyboard: boolean,
+    selective?: boolean,
+}
+
+type ForceReply = {
+    force_reply: boolean,
+    input_field_placeholder?: string,
+    selective?: boolean,
+}
+
+-- ── Request parameter types ────────────────────────────
+
 type SendMessageParams = {
     chat_id: number | string,
     text: string @min_len(1),
     parse_mode?: ParseMode,
-    reply_markup?: table,
+    reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply,
     reply_to_message_id?: number,
     disable_notification?: boolean
 }

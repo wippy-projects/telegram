@@ -7,6 +7,11 @@ entries:
     kind: library.lua
     source: file://types.lua
 
+  # ── Keyboard Builder Library ─────────────────────────────
+  - name: keyboard
+    kind: library.lua
+    source: file://keyboard.lua
+
   # ── API Client Functions ────────────────────────────────
   - name: send_message
     kind: function.lua

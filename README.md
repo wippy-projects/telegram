@@ -69,6 +69,7 @@ wippy run
 | [Architecture](docs/architecture.md)                  | Package structure, request flow, namespace hierarchy, file layout |
 | [Custom Commands & Handlers](docs/custom-handlers.md) | Adding bot commands and update type handlers                      |
 | [SDK Reference](docs/sdk-reference.md)                | All Telegram API functions (`send_message`, `get_file`, etc.)     |
+| [Keyboard Builder](docs/keyboard-builder.md)          | Fluent API for inline keyboards, reply keyboards, and pagination  |
 | [Voice & Audio Messages](docs/voice-messages.md)      | Handling voice notes, audio files, transcription with Whisper     |
 | [LLM Integration](docs/llm-integration.md)            | Building AI-powered bots: text, multi-turn, agents, voice → LLM   |
 | [Local Development](docs/local-development.md)        | Dev setup, useful commands, `dev/` directory                      |
