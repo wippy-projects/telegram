@@ -12,28 +12,40 @@ entries:
     kind: function.lua
     source: file://client.lua
     method: send_message
-    modules: [http_client, json, env, logger]
+    modules: [ http_client, json, env, logger ]
 
   - name: set_webhook
     kind: function.lua
     source: file://client.lua
     method: set_webhook
-    modules: [http_client, json, env, logger]
+    modules: [ http_client, json, env, logger ]
 
   - name: delete_webhook
     kind: function.lua
     source: file://client.lua
     method: delete_webhook
-    modules: [http_client, json, env, logger]
+    modules: [ http_client, json, env, logger ]
 
   - name: get_me
     kind: function.lua
     source: file://client.lua
     method: get_me
-    modules: [http_client, json, env, logger]
+    modules: [ http_client, json, env, logger ]
 
   - name: send_chat_action
     kind: function.lua
     source: file://client.lua
     method: send_chat_action
-    modules: [http_client, json, env, logger]
+    modules: [ http_client, json, env, logger ]
+
+  - name: get_file
+    kind: function.lua
+    source: file://client.lua
+    method: get_file
+    modules: [ http_client, json, env, logger ]
+
+  - name: download_file
+    kind: function.lua
+    source: file://client.lua
+    method: download_file
+    modules: [ http_client, json, env, logger ]

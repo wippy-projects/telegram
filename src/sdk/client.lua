@@ -61,10 +61,41 @@ local function send_chat_action(params)
     return api_call("sendChatAction", params)
 end
 
+--- Get file info by file_id (returns file_path for download).
+local function get_file(file_id: string)
+    return api_call("getFile", {file_id = file_id})
+end
+
+--- Download file content from Telegram servers.
+--- Returns raw file content (string) or nil, error.
+local function download_file(file_path: string)
+    local token = env.get("TELEGRAM_BOT_TOKEN")
+    if not token then
+        return nil, errors.new({kind = errors.INVALID, message = "TELEGRAM_BOT_TOKEN not configured"})
+    end
+
+    local url = "https://api.telegram.org/file/bot" .. token .. "/" .. file_path
+
+    local resp, err = http_client.get(url, {timeout = 60})
+    if err then
+        logger:error("Failed to download file", {file_path = file_path, error = tostring(err)})
+        return nil, err
+    end
+
+    if resp.status_code ~= 200 then
+        local dl_err = errors.new({kind = errors.INTERNAL, message = "File download failed with status " .. tostring(resp.status_code)})
+        return nil, dl_err
+    end
+
+    return resp.body, nil
+end
+
 return {
     send_message = send_message,
     set_webhook = set_webhook,
     delete_webhook = delete_webhook,
     get_me = get_me,
     send_chat_action = send_chat_action,
+    get_file = get_file,
+    download_file = download_file,
 }

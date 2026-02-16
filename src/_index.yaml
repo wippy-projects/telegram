@@ -5,7 +5,6 @@ entries:
   # ── Package Definition ─────────────────────────────────
   - name: definition
     kind: ns.definition
-    readme: file://../README.md
     meta:
       title: Telegram Bot
       description: Telegram webhook bot with registry-based command routing

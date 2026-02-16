@@ -16,6 +16,14 @@ local function detect_update_type(update)
         return "text", nil, update
     end
 
+    if update.message and update.message.voice then
+        return "voice", nil, update
+    end
+
+    if update.message and update.message.audio then
+        return "audio", nil, update
+    end
+
     if update.callback_query then
         return "callback_query", update.callback_query.data, update
     end

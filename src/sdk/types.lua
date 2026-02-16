@@ -7,11 +7,37 @@ type ChatType = "private" | "group" | "supergroup" | "channel"
 
 type ParseMode = "HTML" | "Markdown" | "MarkdownV2"
 
-type UpdateType = "command" | "text" | "callback_query" | "inline_query" | "edited_message" | "channel_post" | "chat_member" | "unknown"
+type UpdateType = "command" | "text" | "voice" | "audio" | "callback_query" | "inline_query" | "edited_message" | "channel_post" | "chat_member" | "unknown"
 
 type MessageEntityType = "mention" | "hashtag" | "cashtag" | "bot_command" | "url" | "email" | "phone_number" | "bold" | "italic" | "underline" | "strikethrough" | "spoiler" | "code" | "pre" | "text_link" | "text_mention" | "custom_emoji"
 
 -- ── Core types ─────────────────────────────────────────
+
+type Voice = {
+    file_id: string,
+    file_unique_id: string,
+    duration: number,
+    mime_type?: string,
+    file_size?: number
+}
+
+type Audio = {
+    file_id: string,
+    file_unique_id: string,
+    duration: number,
+    performer?: string,
+    title?: string,
+    file_name?: string,
+    mime_type?: string,
+    file_size?: number
+}
+
+type File = {
+    file_id: string,
+    file_unique_id: string,
+    file_size?: number,
+    file_path?: string
+}
 
 type Chat = {
     id: number,
@@ -48,7 +74,9 @@ type Message = {
     date: number,
     text?: string,
     entities?: {MessageEntity},
-    reply_to_message?: Message
+    reply_to_message?: Message,
+    voice?: Voice,
+    audio?: Audio
 }
 
 type CallbackQuery = {
@@ -113,6 +141,10 @@ type SetWebhookParams = {
     secret_token?: string,
     allowed_updates?: {string},
     max_connections?: number @min(1) @max(100)
+}
+
+type GetFileParams = {
+    file_id: string @min_len(1)
 }
 
 -- ── Response types ─────────────────────────────────────
