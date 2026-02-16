@@ -10,8 +10,11 @@ infrastructure. Your app provides the HTTP router, env storage, and process host
 - **Webhook endpoint** with secret token validation (`X-Telegram-Bot-Api-Secret-Token`)
 - **Automatic command dispatch** via registry — add commands without modifying the package
 - **Generic update handlers** for non-command updates (callbacks, inline queries, etc.)
+- **Conversation state machine** — declarative multi-step flows (wizards, forms, onboarding) with per-user session
+  processes, validation, timeouts, back/cancel navigation, and keyboard integration
 - **Telegram SDK** with typed API client (`sendMessage`, `setWebhook`, `deleteWebhook`, `getMe`, `getFile`,
-  `downloadFile`)
+  `downloadFile`, `answerCallbackQuery`)
+- **Keyboard builder** — fluent API for inline keyboards, reply keyboards, pagination
 - **CLI tools** to register/remove webhooks
 - **Built-in `/start` and `/help` commands** — `/help` auto-discovers all registered commands
 
@@ -63,16 +66,17 @@ wippy run
 
 ## Documentation
 
-| Topic                                                 | Description                                                       |
-|-------------------------------------------------------|-------------------------------------------------------------------|
-| [Installation & Configuration](docs/installation.md)  | Full setup guide, env variables, requirements                     |
-| [Architecture](docs/architecture.md)                  | Package structure, request flow, namespace hierarchy, file layout |
-| [Custom Commands & Handlers](docs/custom-handlers.md) | Adding bot commands and update type handlers                      |
-| [SDK Reference](docs/sdk-reference.md)                | All Telegram API functions (`send_message`, `get_file`, etc.)     |
-| [Keyboard Builder](docs/keyboard-builder.md)          | Fluent API for inline keyboards, reply keyboards, and pagination  |
-| [Voice & Audio Messages](docs/voice-messages.md)      | Handling voice notes, audio files, transcription with Whisper     |
-| [LLM Integration](docs/llm-integration.md)            | Building AI-powered bots: text, multi-turn, agents, voice → LLM   |
-| [Local Development](docs/local-development.md)        | Dev setup, useful commands, `dev/` directory                      |
+| Topic                                                            | Description                                                         |
+|------------------------------------------------------------------|---------------------------------------------------------------------|
+| [Installation & Configuration](docs/installation.md)             | Full setup guide, env variables, requirements                       |
+| [Architecture](docs/architecture.md)                             | Package structure, request flow, namespace hierarchy, file layout   |
+| [Custom Commands & Handlers](docs/custom-handlers.md)            | Adding bot commands and update type handlers                        |
+| [SDK Reference](docs/sdk-reference.md)                           | All Telegram API functions (`send_message`, `get_file`, etc.)       |
+| [Keyboard Builder](docs/keyboard-builder.md)                     | Fluent API for inline keyboards, reply keyboards, and pagination    |
+| [Conversation State Machine](docs/conversation-state-machine.md) | Multi-step flows: wizards, forms, onboarding with per-user sessions |
+| [Voice & Audio Messages](docs/voice-messages.md)                 | Handling voice notes, audio files, transcription with Whisper       |
+| [LLM Integration](docs/llm-integration.md)                       | Building AI-powered bots: text, multi-turn, agents, voice → LLM     |
+| [Local Development](docs/local-development.md)                   | Dev setup, useful commands, `dev/` directory                        |
 
 ## Adding a Custom Command
 

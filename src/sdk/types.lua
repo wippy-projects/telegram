@@ -191,6 +191,14 @@ type GetFileParams = {
     file_id: string @min_len(1)
 }
 
+type AnswerCallbackQueryParams = {
+    callback_query_id: string @min_len(1),
+    text?: string,
+    show_alert?: boolean,
+    url?: string,
+    cache_time?: number,
+}
+
 -- ── Response types ─────────────────────────────────────
 
 type ApiResponse = {

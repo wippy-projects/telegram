@@ -61,6 +61,12 @@ local function send_chat_action(params)
     return api_call("sendChatAction", params)
 end
 
+--- Answer a callback query (inline button press).
+--- Stops the loading spinner on the button.
+local function answer_callback_query(params)
+    return api_call("answerCallbackQuery", params)
+end
+
 --- Get file info by file_id (returns file_path for download).
 local function get_file(file_id: string)
     return api_call("getFile", {file_id = file_id})
@@ -96,6 +102,7 @@ return {
     delete_webhook = delete_webhook,
     get_me = get_me,
     send_chat_action = send_chat_action,
+    answer_callback_query = answer_callback_query,
     get_file = get_file,
     download_file = download_file,
 }

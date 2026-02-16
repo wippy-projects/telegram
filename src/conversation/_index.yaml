@@ -1,0 +1,18 @@
+version: "1.0"
+namespace: telegram.conversation
+
+entries:
+  # ── Session Process ─────────────────────────────────────
+  # Generic conversation driver: receives a flow definition
+  # and drives the multi-step interaction for one user.
+  - name: session
+    kind: process.lua
+    source: file://session.lua
+    method: main
+    modules:
+      - funcs
+      - logger
+      - time
+      - json
+    imports:
+      keyboard: telegram.sdk:keyboard

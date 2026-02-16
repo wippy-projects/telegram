@@ -40,6 +40,19 @@ funcs.call("telegram.sdk:send_chat_action", {
 })
 ```
 
+### answer_callback_query
+
+Acknowledge an inline button press. Stops the loading spinner on the button.
+
+```lua
+funcs.call("telegram.sdk:answer_callback_query", {
+    callback_query_id = callback_query.id,  -- required
+    text = "Done!",                          -- optional: notification text
+    show_alert = false,                      -- optional: show as alert popup
+    cache_time = 0,                          -- optional: cache seconds
+})
+```
+
 ### get_file
 
 Get file metadata. Returns a table with `file_id`, `file_unique_id`, `file_size`, `file_path`.

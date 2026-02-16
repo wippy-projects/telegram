@@ -43,6 +43,12 @@ entries:
     method: send_chat_action
     modules: [ http_client, json, env, logger ]
 
+  - name: answer_callback_query
+    kind: function.lua
+    source: file://client.lua
+    method: answer_callback_query
+    modules: [ http_client, json, env, logger ]
+
   - name: get_file
     kind: function.lua
     source: file://client.lua
