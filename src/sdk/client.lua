@@ -67,6 +67,11 @@ local function answer_callback_query(params)
     return api_call("answerCallbackQuery", params)
 end
 
+--- Edit the reply markup of an existing message (e.g. remove inline keyboard).
+local function edit_message_reply_markup(params)
+    return api_call("editMessageReplyMarkup", params)
+end
+
 --- Get file info by file_id (returns file_path for download).
 local function get_file(file_id: string)
     return api_call("getFile", {file_id = file_id})
@@ -103,6 +108,7 @@ return {
     get_me = get_me,
     send_chat_action = send_chat_action,
     answer_callback_query = answer_callback_query,
+    edit_message_reply_markup = edit_message_reply_markup,
     get_file = get_file,
     download_file = download_file,
 }

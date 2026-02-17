@@ -49,6 +49,12 @@ entries:
     method: answer_callback_query
     modules: [ http_client, json, env, logger ]
 
+  - name: edit_message_reply_markup
+    kind: function.lua
+    source: file://client.lua
+    method: edit_message_reply_markup
+    modules: [ http_client, json, env, logger ]
+
   - name: get_file
     kind: function.lua
     source: file://client.lua
