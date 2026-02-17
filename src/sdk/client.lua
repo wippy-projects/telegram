@@ -77,6 +77,105 @@ local function get_file(file_id: string)
     return api_call("getFile", {file_id = file_id})
 end
 
+--- Edit the text of an existing message.
+local function edit_message_text(params)
+    return api_call("editMessageText", params)
+end
+
+--- Delete a message.
+local function delete_message(params)
+    return api_call("deleteMessage", params)
+end
+
+--- Call a Telegram Bot API method with multipart/form-data (for file uploads).
+local function api_call_multipart(method: string, form: table, files: table)
+    local token = env.get("TELEGRAM_BOT_TOKEN")
+    if not token then
+        return nil, errors.new({kind = errors.INVALID, message = "TELEGRAM_BOT_TOKEN not configured"})
+    end
+
+    local url = BASE_URL .. token .. "/" .. method
+
+    local resp, err = http_client.post(url, {
+        form = form,
+        files = files,
+        timeout = 60,
+    })
+
+    if err then
+        logger:error("Telegram API multipart request failed", {method = method, error = tostring(err)})
+        return nil, err
+    end
+
+    local body = json.decode(resp.body)
+
+    if not body.ok then
+        local api_err = errors.new({kind = errors.INTERNAL, message = body.description or "Unknown Telegram API error"})
+        logger:error("Telegram API error", {
+            method = method,
+            error_code = body.error_code,
+            description = body.description,
+        })
+        return nil, api_err
+    end
+
+    return body.result, nil
+end
+
+--- Send a photo to a chat.
+--- params.chat_id      (number|string) required
+--- params.photo_bytes  (string)        raw image bytes for upload
+--- params.filename     (string?)       filename (default: "photo.png")
+--- params.content_type (string?)       MIME type (default: "image/png")
+--- params.caption      (string?)       photo caption
+--- params.parse_mode   (string?)       "HTML" or "MarkdownV2"
+--- params.reply_markup (table?)        inline keyboard or other markup
+local function send_photo(params)
+    local form = {
+        chat_id = tostring(params.chat_id),
+    }
+    if params.caption then form.caption = params.caption end
+    if params.parse_mode then form.parse_mode = params.parse_mode end
+    if params.reply_markup then form.reply_markup = json.encode(params.reply_markup) end
+
+    local files = {
+        {
+            name = "photo",
+            filename = params.filename or "photo.png",
+            content = params.photo_bytes,
+            content_type = params.content_type or "image/png",
+        },
+    }
+
+    return api_call_multipart("sendPhoto", form, files)
+end
+
+--- Send a document (file) to a chat.
+--- params.chat_id       (number|string) required
+--- params.document_bytes (string)       raw file bytes for upload
+--- params.filename       (string)       filename with extension
+--- params.content_type   (string?)      MIME type (default: "application/octet-stream")
+--- params.caption        (string?)      document caption
+--- params.parse_mode     (string?)      "HTML" or "MarkdownV2"
+local function send_document(params)
+    local form = {
+        chat_id = tostring(params.chat_id),
+    }
+    if params.caption then form.caption = params.caption end
+    if params.parse_mode then form.parse_mode = params.parse_mode end
+
+    local files = {
+        {
+            name = "document",
+            filename = params.filename or "file",
+            content = params.document_bytes,
+            content_type = params.content_type or "application/octet-stream",
+        },
+    }
+
+    return api_call_multipart("sendDocument", form, files)
+end
+
 --- Download file content from Telegram servers.
 --- Returns raw file content (string) or nil, error.
 local function download_file(file_path: string)
@@ -103,12 +202,16 @@ end
 
 return {
     send_message = send_message,
+    send_photo = send_photo,
+    send_document = send_document,
     set_webhook = set_webhook,
     delete_webhook = delete_webhook,
     get_me = get_me,
     send_chat_action = send_chat_action,
     answer_callback_query = answer_callback_query,
+    edit_message_text = edit_message_text,
     edit_message_reply_markup = edit_message_reply_markup,
+    delete_message = delete_message,
     get_file = get_file,
     download_file = download_file,
 }

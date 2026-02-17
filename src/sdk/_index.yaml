@@ -55,6 +55,30 @@ entries:
     method: edit_message_reply_markup
     modules: [ http_client, json, env, logger ]
 
+  - name: edit_message_text
+    kind: function.lua
+    source: file://client.lua
+    method: edit_message_text
+    modules: [ http_client, json, env, logger ]
+
+  - name: delete_message
+    kind: function.lua
+    source: file://client.lua
+    method: delete_message
+    modules: [ http_client, json, env, logger ]
+
+  - name: send_photo
+    kind: function.lua
+    source: file://client.lua
+    method: send_photo
+    modules: [ http_client, json, env, logger ]
+
+  - name: send_document
+    kind: function.lua
+    source: file://client.lua
+    method: send_document
+    modules: [ http_client, json, env, logger ]
+
   - name: get_file
     kind: function.lua
     source: file://client.lua
