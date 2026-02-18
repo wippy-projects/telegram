@@ -176,6 +176,34 @@ local function send_document(params)
     return api_call_multipart("sendDocument", form, files)
 end
 
+--- Send a voice message to a chat.
+--- params.chat_id       (number|string) required
+--- params.voice_bytes   (string)        raw audio bytes (OGG Opus recommended)
+--- params.filename      (string?)       filename (default: "voice.ogg")
+--- params.content_type  (string?)       MIME type (default: "audio/ogg")
+--- params.caption       (string?)       voice message caption
+--- params.parse_mode    (string?)       "HTML" or "MarkdownV2"
+--- params.duration      (number?)       duration in seconds
+local function send_voice(params)
+    local form = {
+        chat_id = tostring(params.chat_id),
+    }
+    if params.caption then form.caption = params.caption end
+    if params.parse_mode then form.parse_mode = params.parse_mode end
+    if params.duration then form.duration = tostring(params.duration) end
+
+    local files = {
+        {
+            name = "voice",
+            filename = params.filename or "voice.ogg",
+            content = params.voice_bytes,
+            content_type = params.content_type or "audio/ogg",
+        },
+    }
+
+    return api_call_multipart("sendVoice", form, files)
+end
+
 --- Download file content from Telegram servers.
 --- Returns raw file content (string) or nil, error.
 local function download_file(file_path: string)
@@ -203,6 +231,7 @@ end
 return {
     send_message = send_message,
     send_photo = send_photo,
+    send_voice = send_voice,
     send_document = send_document,
     set_webhook = set_webhook,
     delete_webhook = delete_webhook,

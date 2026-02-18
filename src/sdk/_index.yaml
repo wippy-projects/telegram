@@ -73,6 +73,12 @@ entries:
     method: send_photo
     modules: [ http_client, json, env, logger ]
 
+  - name: send_voice
+    kind: function.lua
+    source: file://client.lua
+    method: send_voice
+    modules: [ http_client, json, env, logger ]
+
   - name: send_document
     kind: function.lua
     source: file://client.lua
