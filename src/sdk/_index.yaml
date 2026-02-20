@@ -73,6 +73,12 @@ entries:
     method: send_photo
     modules: [ http_client, json, env, logger ]
 
+  - name: send_photo_url
+    kind: function.lua
+    source: file://client.lua
+    method: send_photo_url
+    modules: [ http_client, json, env, logger ]
+
   - name: send_voice
     kind: function.lua
     source: file://client.lua
@@ -95,4 +101,16 @@ entries:
     kind: function.lua
     source: file://client.lua
     method: download_file
+    modules: [ http_client, json, env, logger ]
+
+  - name: get_chat
+    kind: function.lua
+    source: file://client.lua
+    method: get_chat
+    modules: [ http_client, json, env, logger ]
+
+  - name: get_user_profile_photos
+    kind: function.lua
+    source: file://client.lua
+    method: get_user_profile_photos
     modules: [ http_client, json, env, logger ]

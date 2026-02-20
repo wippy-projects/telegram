@@ -28,6 +28,19 @@ local result, err = funcs.call("telegram.sdk:send_message", {
 })
 ```
 
+### send_photo_url
+
+Send a photo by URL. Telegram downloads the image from the provided URL.
+
+```lua
+local result, err = funcs.call("telegram.sdk:send_photo_url", {
+    chat_id = 123456789,        -- required
+    photo = "https://example.com/image.jpg",  -- required: image URL
+    caption = "Check this out!", -- optional
+    parse_mode = "HTML",        -- optional
+})
+```
+
 ### send_chat_action
 
 Show typing or upload indicator.
@@ -78,6 +91,29 @@ Get bot info.
 ```lua
 local bot, err = funcs.call("telegram.sdk:get_me")
 -- bot.id, bot.first_name, bot.username
+```
+
+### get_chat
+
+Get up-to-date information about a chat. For private chats, returns full user profile including bio and photo info.
+
+```lua
+local chat, err = funcs.call("telegram.sdk:get_chat", chat_id)
+-- chat.id, chat.type, chat.first_name, chat.last_name,
+-- chat.username, chat.bio, chat.photo
+```
+
+### get_user_profile_photos
+
+Get a list of profile pictures for a user.
+
+```lua
+local photos, err = funcs.call("telegram.sdk:get_user_profile_photos", {
+    user_id = 123456789,     -- required
+    offset = 0,              -- optional: sequential number of the first photo
+    limit = 100,             -- optional: 1-100 (default: 100)
+})
+-- photos.total_count, photos.photos (array of PhotoSize arrays)
 ```
 
 ### set_webhook

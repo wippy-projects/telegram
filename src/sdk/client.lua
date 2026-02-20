@@ -150,6 +150,15 @@ local function send_photo(params)
     return api_call_multipart("sendPhoto", form, files)
 end
 
+--- Send a photo by URL. Telegram downloads the image from the URL.
+--- params.chat_id    (number|string) required
+--- params.photo      (string)        image URL (http/https)
+--- params.caption    (string?)       photo caption
+--- params.parse_mode (string?)       "HTML" or "MarkdownV2"
+local function send_photo_url(params)
+    return api_call("sendPhoto", params)
+end
+
 --- Send a document (file) to a chat.
 --- params.chat_id       (number|string) required
 --- params.document_bytes (string)       raw file bytes for upload
@@ -204,6 +213,19 @@ local function send_voice(params)
     return api_call_multipart("sendVoice", form, files)
 end
 
+--- Get up-to-date information about a chat (private, group, supergroup, or channel).
+--- For private chats, returns user info including bio, photo, etc.
+--- @param chat_id number|string — Unique identifier for the target chat
+local function get_chat(chat_id)
+    return api_call("getChat", {chat_id = chat_id})
+end
+
+--- Get a list of profile pictures for a user.
+--- @param params table — {user_id: number, offset?: number, limit?: number}
+local function get_user_profile_photos(params)
+    return api_call("getUserProfilePhotos", params)
+end
+
 --- Download file content from Telegram servers.
 --- Returns raw file content (string) or nil, error.
 local function download_file(file_path: string)
@@ -231,6 +253,7 @@ end
 return {
     send_message = send_message,
     send_photo = send_photo,
+    send_photo_url = send_photo_url,
     send_voice = send_voice,
     send_document = send_document,
     set_webhook = set_webhook,
@@ -243,4 +266,6 @@ return {
     delete_message = delete_message,
     get_file = get_file,
     download_file = download_file,
+    get_chat = get_chat,
+    get_user_profile_photos = get_user_profile_photos,
 }
